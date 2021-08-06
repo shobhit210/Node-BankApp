@@ -36,12 +36,12 @@ const register = (acno, uname, password) => {
 
 
 
-const login = (acno, pswd) => {
+const login = (req, acno, pswd) => {
 
     if (acno in user) {
         if (pswd == user[acno]["password"]) {
             currentUser = user[acno]["uname"]
-            currentAcc = acno;
+            req.session.currentAcc = acno;
             return {
                 statusCode: 200,
                 status: true,
@@ -67,6 +67,7 @@ const login = (acno, pswd) => {
 
 const deposit = (acno, pswd, amt) => {
     var amount = parseInt(amt);
+
 
     if (acno in user) {
         if (pswd == user[acno]["password"]) {
@@ -99,7 +100,7 @@ const deposit = (acno, pswd, amt) => {
 
 
 
-const withdrawal = (acno,pswd,amt) => {
+const withdrawal = (acno, pswd, amt) => {
     var amount = parseInt(amt);
 
     if (acno in user) {
@@ -115,7 +116,7 @@ const withdrawal = (acno,pswd,amt) => {
                     status: true,
                     message: amount + " debited successfully and new balance is: " + user[acno]["balance"]
                 }
-                
+
             } else {
                 return {
                     statusCode: 422,
@@ -141,11 +142,18 @@ const withdrawal = (acno,pswd,amt) => {
 
 
 
-
+const getTransaction = (req) => {
+    return{
+        statusCode: 200,
+        status: true,
+        transaction: user[req.session.currentAcc].transaction
+    }
+}
 
 module.exports = {
     register,
     login,
     deposit,
-    withdrawal
+    withdrawal,
+    getTransaction
 }
