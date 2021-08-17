@@ -3,8 +3,13 @@ const session = require('express-session')
 const dataServices = require('./services/data.service')
 
 const app = express();
+const cors = require('cors')
 
-app.use(express.json());
+app.use(express.json())
+app.use(cors({
+    origin:'http://localhost:4200',
+    credentials:true
+}))
 
 app.use(session({
     secret: 'randomsecurestring',
