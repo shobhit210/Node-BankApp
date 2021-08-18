@@ -76,7 +76,9 @@ const login = (req, acno, pswd) => {
             return {
                 statusCode: 200,
                 status: true,
-                message: "Succesfully logged in"
+                message: "Succesfully logged in",
+                userName: user.uname,
+                currentAcc: user.acno
             }
         }
         return {
@@ -251,9 +253,9 @@ const withdrawal = (req, acno, pswd, amt) => {
 
 
 
-const getTransaction = (req) => {
+const getTransaction = (acno) => {
     return db.User.findOne({
-        acno: req.session.currentAcc
+        acno
     }).then(user => {
         if (user) {
             return {

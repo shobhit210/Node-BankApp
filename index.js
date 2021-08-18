@@ -79,8 +79,8 @@ app.post('/withdrawal', logMiddleware, (req, res) => {
 
 
 app.post('/getTransaction', logMiddleware, (req, res) => {
-    console.log(req.body);
-    dataServices.getTransaction(req)
+    console.log(req.body.acno);
+    dataServices.getTransaction(req.body.acno)
         .then(result => {
             res.status(result.statusCode).json(result)
         })
