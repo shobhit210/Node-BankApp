@@ -87,6 +87,15 @@ app.post('/getTransaction', logMiddleware, (req, res) => {
 })
 
 
+app.delete('/deleteAcc/:acno', logMiddleware, (req, res) => {
+    console.log(req.body.acno);
+    dataServices.deleteAcc(req.params.acno)
+        .then(result => {
+            res.status(result.statusCode).json(result)
+        })
+})
+
+
 app.listen(3000, () => {
     console.log("server started at port number: 3000");
 })
